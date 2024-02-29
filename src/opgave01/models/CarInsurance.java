@@ -1,5 +1,7 @@
 package opgave01.models;
 
+import com.sun.source.doctree.ThrowsTree;
+
 public class CarInsurance {
     private final double basisPremium; // invariant: basisPremium > 0.
     /**
@@ -22,8 +24,27 @@ public class CarInsurance {
      * or YearsWithoutDamage > age-18.
      */
     public double calculatePremium(int age, boolean isWoman, int yearsWithoutDamage) {
-        //TODO
-        return 0;
+        double resultat = basisPremium;
+        if (age < 25){
+            resultat += 25;
+        }
+        if (isWoman==true){
+            resultat -= 5;
+        }
+        if (yearsWithoutDamage<=2){
+            resultat += 0;
+        }
+        else if (yearsWithoutDamage>=3 || yearsWithoutDamage<=5){
+            resultat -= 15;
+        } else if (yearsWithoutDamage>=6 || yearsWithoutDamage<=8){
+            resultat -= 25;
+        }else {
+            resultat-=35;
+        }
+        if (age<18 || yearsWithoutDamage < 0 || yearsWithoutDamage > age-18){
+            throw new RuntimeException("Kan ikke Leje bil");
+        }
+        return resultat;
     }
 }
 
